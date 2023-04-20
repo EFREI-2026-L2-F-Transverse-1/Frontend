@@ -1,24 +1,23 @@
-# frontend
+# Front-end pour le projet Transverse
 
-## Project setup
+Ceci est la partie front-end du site web, réalisée en Vue 3.
+
+## Configuration
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compilation
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Lints & fix
 ```
 npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+`
