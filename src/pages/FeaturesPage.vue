@@ -20,27 +20,17 @@
           <div class="col-md-6 mb-4">
             <div class="card h-100">
               <div class="card-body">
-                <h2 class="card-title text-dark mb-4">Calendrier Personnalisé</h2>
+                <h2 class="card-title text-dark mb-4">Votre calendrier. Rien que pour vous.</h2>
                 <p class="card-text">Créez et gérez votre propre calendrier pour suivre vos cours, réunions et événements importants tout en restant organisé et à jour.</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body">
-                <h2 class="card-title text-dark mb-4">Outils de collaboration</h2>
-                <p class="card-text">Utilisez des outils de collaboration tels que des forums, des wikis et des chats pour travailler ensemble sur des projets, partager des idées et résoudre des problèmes.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body">
-                <h2 class="card-title text-dark mb-4">Bibliothèque de ressources</h2>
-                <p class="card-text">Accédez à une bibliothèque de ressources pédagogiques, telles que des vidéos, des livres et des articles, pour approfondir vos connaissances et soutenir votre apprentissage.</p>
-              </div>
+        <div class="col-md-6 mb-4 mx-auto"> 
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title text-dark mb-4">Outils de collaboration</h2>
+              <p class="card-text">Utilisez des outils de collaboration tels que des forums, des wikis et des chats pour travailler ensemble sur des projets, partager des idées et résoudre des problèmes.</p>
             </div>
           </div>
         </div>

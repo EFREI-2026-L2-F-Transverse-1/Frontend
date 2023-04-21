@@ -1,6 +1,5 @@
 <script>
 import Calendar from '../components/CalendarComponent.vue';
-// Import bootstrap for the modal
 import bootstrap from 'bootstrap';
 
 export default {

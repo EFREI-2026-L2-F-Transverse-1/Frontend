@@ -17,6 +17,9 @@ export default {
         nowIndicator: true,
         editable: true,
         height: 500,
+        scrollTime: '08:00:00',
+        slotMinTime: '08:00:00',
+        slotMaxTime: '20:00:00',
         weekNumbers: true,
         weekText: 'S',
         allDayText: 'Journée',
@@ -63,9 +66,14 @@ export default {
 
 
         events: [
-        // Today event examples
-          { title: 'event 1', date: '2023-04-20', color: 'red', start: '2023-04-20T10:00:00', end: '2023-04-20T12:00:00'},
-          { title: 'event 2', date: '2023-04-21' }
+            // Today course examples (4 per day with a color per subject, not at the same time) (21/04/2023) : { title: 'event 1', date: '2023-04-20', color: 'red', start: '2023-04-20T10:00:00', end: '2023-04-20T12:00:00'}
+            { title: 'Mathématiques', date: '2023-04-20', color: 'red', start: '2023-04-20T10:00:00', end: '2023-04-20T12:00:00'},
+            { title: 'Français', date: '2023-04-20', color: 'blue', start: '2023-04-20T12:00:00', end: '2023-04-20T14:00:00'},
+            { title: 'Anglais', date: '2023-04-20', color: 'orange', start: '2023-04-20T16:00:00', end: '2023-04-20T18:00:00'},
+            { title: 'Mathématiques', date: '2023-04-21', color: 'red', start: '2023-04-21T12:00:00', end: '2023-04-21T14:00:00'},
+            { title: 'Anglais', date: '2023-04-21', color: 'orange', start: '2023-04-21T10:00:00', end: '2023-04-21T12:00:00'},
+            { title: 'Mathématiques', date: '2023-04-22', color: 'red', start: '2023-04-22T10:00:00', end: '2023-04-22T12:00'},
+            { title: 'Révisions', date: '2023-04-22', color: 'purple', start: '2023-04-22T14:00:00', end: '2023-04-22T15:00'}
         ]
       }
     }
