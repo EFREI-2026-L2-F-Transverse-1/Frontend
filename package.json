@@ -8,8 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.5",
+    "@fullcalendar/daygrid": "^6.1.5",
+    "@fullcalendar/timegrid": "^6.1.5",
+    "@fullcalendar/vue3": "^6.1.5",
+    "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "fullcalendar": "^6.1.5",
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
