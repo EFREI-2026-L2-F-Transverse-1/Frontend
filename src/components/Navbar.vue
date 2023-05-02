@@ -13,20 +13,15 @@
           <li class="nav-item">
             <a class="text-primary nav-link" href="#"><router-link style="text-decoration: none; color: inherit;" to="/features">Fonctionnalités</router-link></a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="text-primary nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Compte
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Se connecter</a></li>
-              <li><a class="dropdown-item" href="#">S'inscrire</a></li>
-            </ul>
+          <li class="nav-item">
+            <a class="text-primary nav-link" href="#"><router-link style="text-decoration: none; color: inherit;" to="/account">Mon compte</router-link></a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
+
 
 <script>
 export default {

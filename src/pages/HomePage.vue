@@ -5,8 +5,8 @@
       <div class="container">
         <h1 class="mb-4 text-white">Ensemble pour apprendre, collaborer et réussir.</h1>
         <p class="lead mb-4 text-white">Ce site permet aux étudiants et aux professeurs de collaborer et d'échanger des idées.</p>
-        <a href="#" class="btn btn-lg btn-light">Inscrivez-vous maintenant</a>
-        <a href="#" class="btn btn-lg btn-outline-light mx-2">Se connecter</a>
+        <a class="btn btn-lg btn-light" href="#"><router-link style="text-decoration: none; color: inherit;" to="/register">Inscrivez-vous maintenant</router-link></a>
+        <a class="btn btn-lg btn-outline-light mx-2" href="#"><router-link style="text-decoration: none; color: inherit;" to="/login">Se connecter</router-link></a>
       </div>
     </section>
     <section class="py-5">
