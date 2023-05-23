@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar/>
     <section class="py-5 bg-primary text-center">
       <div class="container">
         <h1 class="mb-4 text-white">Ensemble pour apprendre, collaborer et réussir.</h1>
@@ -113,6 +112,5 @@
         </div>
       </div>
     </section>
-    <Footer/>
   </div>
 </template>

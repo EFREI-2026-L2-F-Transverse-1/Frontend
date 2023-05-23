@@ -39,6 +39,7 @@
                   <input type="password" class="form-control" id="confirm-password" v-model="confirmPassword" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" @click.prevent="register">S'inscrire</button>
+                <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
               </form>
             </div>
           </div>
@@ -47,6 +48,70 @@
     </div>
   </div>
 </template>
+
+<script>
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getFirestore } from 'firebase/firestore'; 
+
+export default {
+  name: 'RegisterPage',
+  data() {
+    return {
+      firstname: '',
+      lastname: '',
+      birthdate: '',
+      role: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      errorMessage: '',  // new data property
+    };
+  },
+  methods: {
+    async register() {
+      const auth = getAuth();
+      const db = getFirestore();
+
+      // Reset error message at the beginning of registration attempt
+      this.errorMessage = '';
+
+      // Validate the input
+      if (!this.firstname || !this.lastname || !this.birthdate || !this.role || !this.email || !this.password || !this.confirmPassword) {
+        this.errorMessage = "Please fill all fields!";
+        return;
+      }
+
+      if(this.password !== this.confirmPassword) {
+        this.errorMessage = "Passwords do not match!";
+        return;
+      }
+
+      try {
+        const response = await createUserWithEmailAndPassword(auth, this.email, this.password);
+        
+        const uid = response.user.uid;
+        
+        // Save additional user details in Firestore
+        await setDoc(doc(db, 'users', uid), {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          birthdate: this.birthdate,
+          role: this.role,
+        });
+        
+        // Log the user in
+        await signInWithEmailAndPassword(auth, this.email, this.password);
+        
+        // Redirect the user to another page
+        this.$router.push('/');
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
+    },
+  },
+};
+</script>
+
 
 <style scoped>
 .register-page {

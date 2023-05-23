@@ -7,6 +7,7 @@
 <script>
 import NavBar from './components/Navbar.vue'
 import FooterBar from './components/FooterBar.vue'
+import { auth } from './firebase'  // adjust the path to firebase.js
 
 export default {
   name: 'App',
@@ -15,10 +16,17 @@ export default {
     FooterBar
   },
   mounted() {
-    console.log(this.$refs.navbar) // affiche le composant NavBar
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log('User signed in')
+      } else {
+        console.log('No user signed in')
+      }
+    })
   }
 }
 </script>
+
 
 
 <style>

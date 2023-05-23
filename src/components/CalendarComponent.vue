@@ -4,6 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import fr from '@fullcalendar/core/locales/fr'
+import { db, auth } from '../firebase'; // adjust the path to firebase.js
+import { collection, query, getDocs } from 'firebase/firestore';
 
 export default {
   name: 'CalendarComponent',
@@ -26,75 +28,52 @@ export default {
         plugins: [ timeGridPlugin, dayGridPlugin, interactionPlugin ],
         initialView: 'timeGridWeek',
         headerToolbar: {
-            left: 'prev,next',
-            center: 'title',
-            right: 'timeGridDay timeGridWeek dayGridMonth'
+          left: 'prev,next',
+          center: 'title',
+          right: 'timeGridDay timeGridWeek dayGridMonth'
         },
         locale: fr,
         dateClick: this.handleDateClick,
-
-        eventClick: (info) => {
-            // If there's an existing tooltip, remove it
-            if (this.eventTooltip) {
-                document.body.removeChild(this.eventTooltip);
-                this.eventTooltip = null;
-            }
-
-            // Create a new tooltip div element
-            this.eventTooltip = document.createElement('div');
-            this.eventTooltip.classList.add('event-tooltip');
-
-            // Add the event information to the tooltip
-            this.eventTooltip.innerHTML = `
-                <strong>${info.event.title}</strong><br>
-                Début: ${info.event.start.toLocaleString()}<br>
-                Fin: ${info.event.end ? info.event.end.toLocaleString() : 'Aucune'}
-            `;
-
-            // Position the tooltip to the right of the event and centered relative to its height
-            const eventRect = info.el.getBoundingClientRect();
-            this.eventTooltip.style.position = 'absolute';
-            this.eventTooltip.style.left = (eventRect.right + 10) + 'px'; // 10px margin to the right of the event
-            this.eventTooltip.style.top = (eventRect.top + (eventRect.height / 2)) + 'px';
-            this.eventTooltip.style.transform = 'translateY(-50%)';
-
-            // Add the tooltip to the body
-            document.body.appendChild(this.eventTooltip);
-            },
-
-
-
-
-        events: [
-            // Today course examples (4 per day with a color per subject, not at the same time) (21/04/2023) : { title: 'event 1', date: '2023-04-20', color: 'red', start: '2023-04-20T10:00:00', end: '2023-04-20T12:00:00'}
-            { title: 'Mathématiques', date: '2023-04-20', color: 'red', start: '2023-04-20T10:00:00', end: '2023-04-20T12:00:00'},
-            { title: 'Français', date: '2023-04-20', color: 'blue', start: '2023-04-20T12:00:00', end: '2023-04-20T14:00:00'},
-            { title: 'Anglais', date: '2023-04-20', color: 'orange', start: '2023-04-20T16:00:00', end: '2023-04-20T18:00:00'},
-            { title: 'Mathématiques', date: '2023-04-21', color: 'red', start: '2023-04-21T12:00:00', end: '2023-04-21T14:00:00'},
-            { title: 'Anglais', date: '2023-04-21', color: 'orange', start: '2023-04-21T10:00:00', end: '2023-04-21T12:00:00'},
-            { title: 'Mathématiques', date: '2023-04-22', color: 'red', start: '2023-04-22T10:00:00', end: '2023-04-22T12:00'},
-            { title: 'Révisions', date: '2023-04-22', color: 'purple', start: '2023-04-22T14:00:00', end: '2023-04-22T15:00'}
-        ]
+        events: [],
       }
     }
   },
   methods: {
-    handleDateClick: function(arg) {
+    handleDateClick(arg) {
       alert('date click! ' + arg.dateStr)
     },
-
-    
-
     hideTooltip(e) {
-        if (this.eventTooltip && !this.eventTooltip.contains(e.target)) {
+      if (this.eventTooltip && !this.eventTooltip.contains(e.target)) {
         document.body.removeChild(this.eventTooltip);
         this.eventTooltip = null;
-        document.removeEventListener("click", this.hideTooltip);
-        }
+        document.removeEventListener('click', this.hideTooltip);
+      }
     },
-  }
+    async loadEvents() {
+      if (auth.currentUser) {
+        const userUid = auth.currentUser.uid;
+        const eventsCollectionRef = collection(db, 'users', userUid, 'events');
+        const eventsQuery = query(eventsCollectionRef);
+
+        try {
+          const snapshot = await getDocs(eventsQuery);
+          const events = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          this.calendarOptions.events = events;
+        } catch (error) {
+          console.error('Error loading events:', error);
+        }
+      }
+    },
+  },
+  mounted() {
+    this.loadEvents();
+  },
 }
 </script>
+
 <template>
   <FullCalendar :options="calendarOptions" />
 </template>

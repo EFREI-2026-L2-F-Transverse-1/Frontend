@@ -1,26 +1,80 @@
 <script>
 import Calendar from '../components/CalendarComponent.vue';
-import bootstrap from 'bootstrap';
+import { Modal } from 'bootstrap';
+import { db, auth } from '../firebase';
+import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 
 export default {
   components: {
-    Calendar, // make the <FullCalendar> tag available
+    Calendar,
+  },
+  data() {
+    return {
+      firstname: ''
+    };
+  },
+  created() {
+    this.getFirstNameAsync();
   },
   methods: {
-    createEvent() {
-      const title = document.getElementById('event-title').value;
-      const start = document.getElementById('event-start').value;
-      const end = document.getElementById('event-end').value;
+    async getFirstName() {
+      if (auth.currentUser) {
+        const userUid = auth.currentUser.uid;
+        const userDocRef = doc(db, 'users', userUid);
+        const userDocSnapshot = await getDoc(userDocRef);
 
-      console.log('Creating event:', {
-        title,
-        start,
-        end,
-      });
+        if (userDocSnapshot.exists()) {
+          this.firstname = userDocSnapshot.data().firstname;
+          return
+        }
+      }
+      this.firstname = '';
+      return
+    },
+    async getFirstNameAsync() {
+      await this.getFirstName();
+      return this.firstname ? this.firstname : 'Unknown User';
+    },
 
-      const modalEl = document.getElementById('createEventModal');
-      const modalInstance = bootstrap.Modal.getInstance(modalEl);
-      modalInstance.hide();
+    async createEvent() {
+      if (auth.currentUser) {
+        const title = document.getElementById('event-title').value;
+        const start = document.getElementById('event-start').value;
+        const end = document.getElementById('event-end').value;
+        const color = document.getElementById('event-color').value;
+
+        try {
+          const userUid = auth.currentUser.uid;
+          const eventsCollectionRef = collection(db, 'users', userUid, 'events');
+
+          // Add a new event document within the 'events' subcollection
+          const docRef = await addDoc(eventsCollectionRef, {
+            title: title,
+            start: start,
+            end: end,
+            color: color,
+          });
+          console.log('Event created with ID:', docRef.id);
+
+          // Add the event to the calendar's events
+          this.$refs.calendar.addEvent({
+            title: title,
+            start: start,
+            end: end,
+            color: color,
+          });
+        } catch (e) {
+          console.error('Error adding event:', e);
+        }
+
+        // Hide the modal after event creation
+        const modalEl = document.getElementById('createEventModal');
+        const modalInstance = new Modal(modalEl);
+        modalInstance.hide();
+      } else {
+        console.log('User not authenticated');
+        // Handle the case when the user is not authenticated
+      }
     },
   },
 };
@@ -29,7 +83,7 @@ export default {
 <template>
     <div class="calendar">
       <div class="left text-center">
-        <h1 style="max-width: 200px; margin: 0 auto;">Calendrier de Tom</h1>
+        <h1 style="max-width: 200px; margin: 0 auto;">Calendrier de {{ firstname }}</h1>
         <div class="d-grid gap-2" style="padding-top: 30px">
           <button
             type="button"
@@ -78,6 +132,11 @@ export default {
                 <div class="mb-3">
                   <label for="event-end" class="form-label">Date de fin</label>
                   <input type="datetime-local" class="form-control" id="event-end" />
+                </div>
+                <!-- Event color (RGB selector) -->
+                <div class="mb-3">
+                  <label for="event-color" class="form-label">Couleur</label>
+                  <input type="color" class="form-control" id="event-color" />
                 </div>
               </form>
             </div>

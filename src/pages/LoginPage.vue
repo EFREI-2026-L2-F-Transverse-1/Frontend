@@ -16,6 +16,7 @@
                     <input type="password" class="form-control" id="password" v-model="password" required>
                   </div>
                   <button type="submit" class="btn btn-primary btn-block" @click.prevent="login">Se connecter</button>
+                  <p class="text-danger" v-if="errorMessage">{{ errorMessage }}</p>
                 </form>
               </div>
             </div>
@@ -26,22 +27,40 @@
   </template>
   
   <script>
-  export default {
-    name: 'LoginPage',
-    data() {
-      return {
-        email: '',
-        password: '',
-      };
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+export default {
+  name: 'LoginPage',
+  data() {
+    return {
+      email: '',
+      password: '',
+      errorMessage: '',
+    };
+  },
+  methods: {
+    async login() {
+      this.errorMessage = '';
+
+      // Validate the input
+      if (!this.email || !this.password) {
+        this.errorMessage = "Please fill all fields!";
+        return;
+      }
+
+      const auth = getAuth();
+      try {
+        await signInWithEmailAndPassword(auth, this.email, this.password);
+        // After successful login, you can redirect user to another route
+        this.$router.push('/');
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
     },
-    methods: {
-      login() {
-        // Envoyer la demande de connexion au serveur ici
-        console.log(`Connexion avec email: ${this.email} et mot de passe: ${this.password}`);
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
+
   
   <style scoped>
   .login-page {
