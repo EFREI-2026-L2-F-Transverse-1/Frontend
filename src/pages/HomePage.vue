@@ -1,11 +1,22 @@
 <template>
   <div>
-    <section class="py-5 bg-primary text-center">
-      <div class="container">
+    <section class="py-5 bg-primary text-center landing-front" style="height: 65vh;">
+      <!-- Vertically centered -->
+      <div class="container custom-center-container">
         <h1 class="mb-4 text-white">Ensemble pour apprendre, collaborer et réussir.</h1>
         <p class="lead mb-4 text-white">Ce site permet aux étudiants et aux professeurs de collaborer et d'échanger des idées.</p>
-        <a class="btn btn-lg btn-light" href="#"><router-link style="text-decoration: none; color: inherit;" to="/register">Inscrivez-vous maintenant</router-link></a>
-        <a class="btn btn-lg btn-outline-light mx-2" href="#"><router-link style="text-decoration: none; color: inherit;" to="/login">Se connecter</router-link></a>
+        <template v-if="!loggedIn">
+          <div class="button-group">
+            <a class="btn btn-lg btn-light" href="#"><router-link style="text-decoration: none; color: inherit;" to="/register">Inscrivez-vous maintenant</router-link></a>
+            <a class="btn btn-lg btn-outline-light mx-2" href="#"><router-link style="text-decoration: none; color: inherit;" to="/login">Se connecter</router-link></a>
+          </div>
+        </template>
+        <template v-else>
+          <div class="button-group">
+            <a class="btn btn-lg btn-light" href="#"><router-link style="text-decoration: none; color: inherit;" to="/calendar">Accéder à l'agenda</router-link></a>
+            <a class="btn btn-lg btn-outline-light mx-2" href="#"><router-link style="text-decoration: none; color: inherit;" @click="signOut" to='/'>Se déconnecter</router-link></a>
+          </div>
+        </template>
       </div>
     </section>
     <section class="py-5">
@@ -114,3 +125,60 @@
     </section>
   </div>
 </template>
+
+<script>
+import { auth } from '../firebase'  // adjust the path to firebase.js
+
+export default {
+  name: 'HomePage',
+  data() {
+    return {
+      loggedIn: false  // Set the initial value of loggedIn to false
+    }
+  },
+  methods: {
+    signOut() {
+      auth.signOut()
+      this.loggedIn = false
+    }
+  },
+  beforeMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log('User signed in')
+        this.loggedIn = true
+      } else {
+        console.log('No user signed in')
+        this.loggedIn = false
+      }
+    })
+  }
+}
+</script>
+
+<style scoped>
+.custom-center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-group a {
+  margin: 0 5px;
+}
+
+.landing-front {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), #15222F), url('https://maryellenstrongfoundation.org/wp-content/uploads/2017/11/Rocky-Mountains-in-Black-and-White-Silhouette-528723418_4928x3264-2.jpeg') repeat;
+  background-size: cover;
+
+
+}
+</style>

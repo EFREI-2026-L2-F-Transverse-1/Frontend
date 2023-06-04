@@ -4,6 +4,10 @@ import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 // ENV Values
+
+// Print the env variables
+console.log('VUE_APP_FIREBASE_API_KEY', process.env.VUE_APP_FIREBASE_API_KEY)
+
 const firebaseConfig = {
     apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
     authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,

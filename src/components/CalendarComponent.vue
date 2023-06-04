@@ -69,7 +69,15 @@ export default {
     },
   },
   mounted() {
-    this.loadEvents();
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.loadEvents();
+      }
+      else {
+        // Send user to login page
+        this.$router.push('/login');
+      }
+    });
   },
 }
 </script>
