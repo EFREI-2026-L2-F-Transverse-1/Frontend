@@ -33,7 +33,11 @@ const routes = [
   }
 ]
 
+const publicPath = process.env.NODE_ENV === 'production' ? '/Frontend/' : '/';
+
 const router = createRouter({
+  mode: 'history',
+  base: publicPath,
   history: createWebHistory(),
   routes
 })
