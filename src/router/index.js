@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/pages/HomePage.vue'
 import Features from '@/pages/FeaturesPage.vue'
 import Calendar from '@/pages/CalendarPage.vue'
@@ -36,7 +36,8 @@ const routes = [
 const publicPath = process.env.NODE_ENV === 'production' ? '/Frontend/' : '/';
 
 const router = createRouter({
-  history: createWebHistory(publicPath),
+  base: publicPath,
+  history: createWebHashHistory(publicPath),
   routes
 })
 
