@@ -44,7 +44,7 @@ export default {
 
       // Validate the input
       if (!this.email || !this.password) {
-        this.errorMessage = "Please fill all fields!";
+        this.errorMessage = "Vous devez remplir tous les champs.";
         return;
       }
 
