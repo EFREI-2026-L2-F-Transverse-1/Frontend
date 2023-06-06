@@ -1,3 +1,4 @@
+<!-- Page "Features": Description des différentes fonctionnalités du site -->
 <template>
   <div>
     <section class="py-5 bg-primary text-center">

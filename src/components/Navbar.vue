@@ -13,9 +13,6 @@
           <li class="nav-item">
             <a class="text-primary nav-link" href="#"><router-link style="text-decoration: none; color: inherit;" to="/features">Fonctionnalités</router-link></a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="text-primary nav-link" href="#"><router-link style="text-decoration: none; color: inherit;" to="/account">Mon compte</router-link></a>
-          </li> -->
         </ul>
       </div>
     </div>
@@ -32,7 +29,6 @@ export default {
 </script>
 
 <style>
-/* Underline on router-link hover */
 a:hover {
   text-decoration: underline;
 }

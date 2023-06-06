@@ -1,7 +1,7 @@
+<!-- Page "Home": Page principale du site web -->
 <template>
   <div>
     <section class="py-5 bg-primary text-center landing-front" style="height: 65vh;">
-      <!-- Vertically centered -->
       <div class="container custom-center-container">
         <h1 class="mb-4 text-white">Ensemble pour apprendre, collaborer et réussir.</h1>
         <p class="lead mb-4 text-white">Ce site permet aux étudiants et aux professeurs de collaborer et d'échanger des idées.</p>

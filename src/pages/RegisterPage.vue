@@ -1,3 +1,4 @@
+<!-- Register: Page d'inscription des utilisateurs  -->
 <template>
   <div class="register-page">
     <div class="container">
@@ -64,7 +65,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      errorMessage: '',  // new data property
+      errorMessage: '',
     };
   },
   methods: {
@@ -72,17 +73,16 @@ export default {
       const auth = getAuth();
       const db = getFirestore();
 
-      // Reset error message at the beginning of registration attempt
       this.errorMessage = '';
 
-      // Validate the input
+      // Validation des champs
       if (!this.firstname || !this.lastname || !this.birthdate || !this.role || !this.email || !this.password || !this.confirmPassword) {
-        this.errorMessage = "Please fill all fields!";
+        this.errorMessage = "Merci de remplir tous les champs !";
         return;
       }
 
       if(this.password !== this.confirmPassword) {
-        this.errorMessage = "Passwords do not match!";
+        this.errorMessage = "Les mots de passe ne correspondent pas !";
         return;
       }
 
@@ -91,7 +91,7 @@ export default {
         
         const uid = response.user.uid;
         
-        // Save additional user details in Firestore
+        // Enregistrer les informations de l'utilisateur dans la base de données Firestore
         await setDoc(doc(db, 'users', uid), {
           firstname: this.firstname,
           lastname: this.lastname,
@@ -99,10 +99,10 @@ export default {
           role: this.role,
         });
         
-        // Log the user in
+        // Connecter l'utilisateur
         await signInWithEmailAndPassword(auth, this.email, this.password);
         
-        // Redirect the user to another page
+        // Rediriger l'utilisateur vers la page d'accueil
         this.$router.push('/');
       } catch (error) {
         this.errorMessage = error.message;

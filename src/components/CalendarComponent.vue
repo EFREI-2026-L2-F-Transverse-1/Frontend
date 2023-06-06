@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import fr from '@fullcalendar/core/locales/fr'
-import { db, auth } from '../firebase'; // adjust the path to firebase.js
+import { db, auth } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
 
 export default {
@@ -74,7 +74,6 @@ export default {
         this.loadEvents();
       }
       else {
-        // Send user to login page
         this.$router.push('/login');
       }
     });
@@ -102,10 +101,6 @@ export default {
         text-decoration: none;
     }
 
-    /* .fc-day-today {
-    background: #e9faff !important;
-    }  */
-
     .fc-timegrid-slot-label {
         width: 300px;
     }
@@ -115,7 +110,7 @@ export default {
         border-radius: 5px;
         padding: 10px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        z-index: 3; /* Added to bring the tooltip to the forefront */
+        z-index: 3;
     }
 
 </style>

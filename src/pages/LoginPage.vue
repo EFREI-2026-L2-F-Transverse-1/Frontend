@@ -1,3 +1,4 @@
+<!-- Template: Partie HTML du site -->
 <template>
     <div class="login-page">
       <div class="container">
@@ -26,7 +27,8 @@
     </div>
   </template>
   
-  <script>
+<!-- Script: Partie JavaScript du site -->
+<script>
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default {
@@ -42,16 +44,16 @@ export default {
     async login() {
       this.errorMessage = '';
 
-      // Validate the input
+      // Validation du formulaire
       if (!this.email || !this.password) {
         this.errorMessage = "Vous devez remplir tous les champs.";
         return;
       }
 
+      // Connexion
       const auth = getAuth();
       try {
         await signInWithEmailAndPassword(auth, this.email, this.password);
-        // After successful login, you can redirect user to another route
         this.$router.push('/');
       } catch (error) {
         this.errorMessage = error.message;
@@ -62,7 +64,8 @@ export default {
 </script>
 
   
-  <style scoped>
+<!-- Style: Partie CSS du site -->
+<style scoped>
   .login-page {
     height: 100vh;
     display: flex;
